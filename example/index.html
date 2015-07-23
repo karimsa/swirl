@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Swirl Test</title>
+</head>
+
+<body>
+    <div class="hello-world">
+        <h1>Hello, world.</h1>
+    </div>
+
+    <script src="../swirl.min.js"></script>
+    <script>
+        'use strict';
+
+        class HelloWorld extends Style {
+            constructor(clr) {
+                super();
+
+                this.padding('10px')
+                    .transition('.3s all ease')
+                    .theme(clr);
+            }
+            
+            theme (clr) {
+                this.color(clr)
+                    .border('solid 1px ' + clr);
+            }
+        }
+        
+        var color = function () { return Math.round(Math.random() * 255) },
+            gen = function () { return 'rgb(' + color() + ',' + color() + ',' + color() + ')'; },
+            hw = new HelloWorld(gen());
+        
+        // apply our class' handle to our element
+        hw.apply('.hello-world');
+        
+        // pseudo-class test
+        hw.on('hover').theme('#000');
+        
+        // responsive-ness test
+        hw.fontSize('3em').on('max-width: 500px').fontSize('1em');
+        
+        // test to make sure FUC is not an issue
+        setInterval(function () { hw.theme(gen()); }, 600);
+    </script>
+</body>
+
+</html>

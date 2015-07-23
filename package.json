@@ -1,0 +1,35 @@
+{
+  "name": "swirl",
+  "version": "1.0.0",
+  "description": "CSS-based styling brought to JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karimsa/swirl.git"
+  },
+  "keywords": [
+    "javascript",
+    "css",
+    "styling"
+  ],
+  "author": "Karim Alibhai",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/karimsa/swirl/issues"
+  },
+  "homepage": "https://github.com/karimsa/swirl#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0"
+  },
+  "dependencies": {
+    "dot": "^1.0.3"
+  }
+}
