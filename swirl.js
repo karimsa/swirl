@@ -65,6 +65,7 @@ class Style {
     }
 
     attach(rule) {
+        rule.sheet = this;
         this.rules[rule.id] = rule;
         this.lastCompiled[rule.id] = '';
         this.template += '{{it["' + rule.id + '"]}}';
@@ -100,6 +101,7 @@ class Rule {
         this.changed = {}; // create a list of updated properties
         this.selectors = []; // manage a list of selectors to compile for
         this.selectorUpdated = false; // manage selector-recompiling
+        this.sheet = null; // the target sheet this rule is attached to
 
         this.rebuild = debounce(function() {
             var tpl = dot.template(this.rules);
@@ -167,34 +169,37 @@ class Rule {
 
     // add properties for a specific state
     on(state) {
-        class MyStyle extends Style {
+        class MyRule extends Rule {
             constructor () {
                 super();
             }
         }
         
-        MyStyle.prototype = this.constructor.prototype;
-        var style = new MyStyle();
+        MyRule.prototype = this.constructor.prototype;
+        var rule = new MyRule();
+        
+        // attach to my sheet
+        if (this.sheet) this.sheet.attach(rule);
 
         // for pseudo-classes, we just add all selectors
         // with the class appended
         if (pseudoStates.indexOf(state) !== -1) {
             for (var selector of this.selectors) {
-                style.apply(selector + ':' + state);
+                rule.apply(selector + ':' + state);
             }
         } else if (pseudoElements.indexOf(state) !== -1) {
             for (var selector of this.selectors) {
-                style.apply(selector + '::' + state);
+                rule.apply(selector + '::' + state);
             }
         } else {
-            style.render = function () {
+            rule.render = function () {
                 this.events.emit('rendered', '@media (' + state + ') {' + this.tpl(this.map) + '}')
             };
-            for (var selector of this.selectors) style.apply(selector);
+            for (var selector of this.selectors) rule.apply(selector);
         }
 
         // return the next style
-        return style;
+        return rule;
     }
 
     // add a new compilation target then compile
