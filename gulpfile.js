@@ -13,6 +13,14 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename');
 
+gulp.task('debug', function () {
+    return gulp.src('swirl.js')
+            .pipe(babel())
+            .pipe(browserify())
+            .pipe(rename('swirl.min.js'))
+            .pipe(gulp.dest('.'));
+});
+
 gulp.task('default', function () {
     return gulp.src('swirl.js')
             .pipe(sourcemaps.init())
@@ -26,4 +34,8 @@ gulp.task('default', function () {
 
 gulp.task('watch', ['default'], function () {
     gulp.watch('swirl.js', ['default']);
+});
+
+gulp.task('watch:debug', ['debug'], function () {
+    gulp.watch('swirl.js', ['debug']);
 });
