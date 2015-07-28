@@ -15,7 +15,7 @@
     <script>
         'use strict';
 
-        class HelloWorld extends Style {
+        class HelloWorld extends Rule {
             constructor(clr) {
                 super();
 
@@ -32,7 +32,11 @@
         
         var color = function () { return Math.round(Math.random() * 255) },
             gen = function () { return 'rgb(' + color() + ',' + color() + ',' + color() + ')'; },
-            hw = new HelloWorld(gen());
+            hw = new HelloWorld(gen()),
+            sheet = new Style();
+            
+        // attach your rule to the stylesheet
+        sheet.attach(hw);
         
         // apply our class' handle to our element
         hw.apply('.hello-world');
