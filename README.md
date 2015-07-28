@@ -17,22 +17,28 @@ Place the file(s) somewhere in your project folder, and import the minified sour
 
 ## Usage
 
-There's a few different ways to use Swirl, depending on your project. Most simply, you can use the global `Style` class:
+There's a few different ways to use Swirl, depending on your project. Most simply, you can use the global `Rule` class:
 
 **Simplest usage:**
 
 ```javascript
-// create a new style
-var style = new Style();
+// create a new rule
+var rule = new Rule();
+
+// create a new sheet
+var sheet = new Style();
+
+// attach your rule to your sheet
+sheet.attach(rule);
 
 // set the properties for your rule
-style.color('#fff')
-	 .background('#000');
+rule.color('#fff')
+	.background('#000');
 	
 // and then apply it to whatever selectors you
 // want to use this rule on
-style.apply('.my-class')
-	 .apply('#my-element, mytag[myattr="myval"]');
+rule.apply('.my-class')
+	.apply('#my-element, mytag[myattr="myval"]');
 ```
 
 ### Creating custom classes:
@@ -41,7 +47,7 @@ Creating custom classes helps you export your styles as a module for others to u
 
 ```javascript
 // this class can now be exported as a module
-class MyCustomClass extends Style {
+class MyCustomClass extends Rule {
 	constructor (color) {
 		super();
 		
@@ -57,8 +63,11 @@ class MyCustomClass extends Style {
 }
 
 // create an instance of the class
-var style = new MyCustomClass('#fff');
-style.apply('.my-element');
+var myRule = new MyCustomClass('#fff');
+var mySheet = new Style();
+
+// attach your rule to the sheet
+mySheet.attach(myRule);
 ```
 
 ## License
